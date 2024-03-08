@@ -1,0 +1,70 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataBiases": "cr:dataBiases",
+    "dataCollection": "cr:dataCollection",
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isEnumeration": "cr:isEnumeration",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "personalSensitiveInformation": "cr:personalSensitiveInformation",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "name": "Basil_suitability_dataset_for_Valle_del_Cauca__Colombia",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "description": "We present a 100-meter resolution layer for evaluating basil crop suitability in Valle del Cauca, southwest Colombia, accompanied by pertinent modeling layers. Our model employs seven biophysical criteria, namely Altitude, Temperature, Solar Brightness, Relative Humidity, Drainage, Precipitation, and Slope, were employed, alongside four exclusion criteria: Erosion, Protected Areas, Water Bodies, and Urban Areas. We explore primary and secondary scenarios, assessing suitable areas under average and 75% rainfall exceedance conditions using an additional precipitation layer. An additional precipitation layer was incorporated for this purpose. The data for the layers were sourced from various government entities and private organizations. The 12 normalized criteria layers, reflecting aptitude for the studied crop, are included, along with layers for the Suitable Crop Location Index (SCLI) for both pre-and post-classification into categories. Supplementary layers that may be relevant but were not included in the model, such as the road network and airport locations, are also provided.<br><br> Methodology:The layers were obtained through a methodology that integrates AHP-GIS techniques. Based on the hierarchy and weighted values of each biophysical criterion obtained through the Analytic Hierarchy Process (AHP), each layer was integrated through a weighted sum to derive the Suitable Crop Location Index (SCLI).",
+  "keywords": [
+    "crop production",
+    "geographical information systems",
+    "Colombia",
+    "production location",
+    "Latin America and the Caribbean",
+    "Performance, Innovation and Strategic Analysis for Impact"
+  ],
+  "url": "https://doi.org/10.7910/DVN/84NLSQ",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "811631f2-c8e8-4c58-b0b2-5197e7ba8671",
+      "name": "02a._DatainBrief.gdb.zip",
+      "description": "02a. DatainBrief.gdb.zip",
+      "contentUrl": "https://dataverse.harvard.edu/api/access/datafile/8943723",
+      "encodingFormat": "https://dataverse.harvard.edu/api/access/datafile/8943723",
+      "md5": "3839d4144b73a6548267cec7582f086b"
+    }
+  ]
+}
