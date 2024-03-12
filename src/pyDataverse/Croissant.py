@@ -20,21 +20,24 @@ class Croissant():
         self.distributions = []
         self.record_sets = []
         self.lastID = False
+        self.pointers = []
 
     def get_record(self):
         g = self.g
         self.subcrosswalks = { "distribution": "http://www.openarchives.org/ore/terms/aggregates" }
         self.s = self.subgraph(g, self.subcrosswalks["distribution"])
-        self.s = self.subgraph(g, self.lastID, SEARCH="SUBJECT")
-        #self.printgraph(self.s)
-        self.distributions.append(
-        mlc.FileObject(
-            name=self.clean_name_string(self.get_fields(self.s, self.filecrosswalks["name"])),
-            description=self.get_fields(self.s, self.filecrosswalks["description"]),
-            content_url=self.get_fields(self.s, self.filecrosswalks["content_url"]),
-            encoding_format=self.get_fields(self.s, self.filecrosswalks["content_url"]),  # No official arff mimetype exist
-            md5=self.get_fields(self.s, self.filecrosswalks["md5"])
-        ))
+        for i in range(0,len(self.pointers)): #self.pointers:
+            pointer = self.pointers[i]
+            self.s = self.subgraph(g, pointer, SEARCH="SUBJECT")
+            #print(self.get_fields(self.s, self.filecrosswalks["name"]))
+            self.distributions.append(
+            mlc.FileObject(
+                name=self.clean_name_string(self.get_fields(self.s, self.filecrosswalks["name"])),
+                description=self.get_fields(self.s, self.filecrosswalks["description"]),
+                content_url=self.get_fields(self.s, self.filecrosswalks["content_url"]),
+                encoding_format=self.get_fields(self.s, self.filecrosswalks["content_url"]),  # No official arff mimetype exist
+                md5=self.get_fields(self.s, self.filecrosswalks["md5"])
+            ))
         
         self.localmetadata = mlc.Metadata(
             name=self.clean_name_string(self.get_fields(g, self.crosswalks["name"])),
@@ -72,6 +75,7 @@ class Croissant():
             for s, p, o in data:
                 subgraph.add((s, p, o))
                 self.lastID = o
+                self.pointers.append(o)
                 if self.DEBUG:
                     print("%s %s %s" % (s, p, o))
             return subgraph
