@@ -29,6 +29,7 @@ class Croissant():
         self.crosswalks = { "name": "http://purl.org/dc/terms/title", "description": ["https://dataverse.org/schema/citation/dsDescriptionValue", "http://schema.org/description", "https://dataverse.org/schema/citation/dsDescription#Text", "https://dataverse.org/schema/citation/dsDescriptionText"], "url": "http://www.openarchives.org/ore/terms/describes",
              "citation": "https://dataverse.org/schema/citation/datasetContactName", "keywords": "https://dataverse.org/schema/citation/keywordValue", "creators": "https://dataverse.org/schema/citation/author#Name",
             "author": ["https://dataverse.org/schema/citation/authorName", "https://dataverse.org/schema/citation/author#Name"], "version": "http://schema.org/version", "in_language": ["http://purl.org/dc/terms/language", "https://portal.odissei.nl/schema/dansRights#dansMetadataLanguage"],
+            "authoraffiliation": "https://dataverse.org/schema/citation/authorAffiliation",
             "date_modified": "http://schema.org/dateModified", "date_published":"http://schema.org/datePublished", "date_created": "http://purl.org/dc/terms/dateSubmitted", "license": "http://schema.org/license",
             "publisher": "https://dataverse.org/schema/citation/productionPlace", "data_type": "http://rdf-vocabulary.ddialliance.org/discovery#kindOfData", "restricted": "https://dataverse.org/schema/core#restricted"
              }          
@@ -105,6 +106,19 @@ class Croissant():
 
         return self.root
 
+
+    def schema_creators(self, authors, affiliations):
+        creators = []
+        for nameID in range(0, len(authors)):
+            authorinfo = { "@type": "sc:Person", "name": authors[nameID]}
+            try:
+                if affiliations[nameID]:
+                    authorinfo['affiliation'] = affiliations[nameID]
+            except: 
+                continue
+            creators.append(authorinfo)
+        return creators
+
     def fileid_lookup(self, subgraph, tagpoint):
         filename = self.get_fields(subgraph, tagpoint)
         if not filename:
@@ -148,7 +162,7 @@ class Croissant():
                 content_url=self.get_fields(self.s, self.filecrosswalks["content_url"]),
                 encoding_format=self.get_fields(self.s, self.filecrosswalks["encoding_format"]),  # No official arff mimetype exist
                 md5=self.get_fields(self.s, self.filecrosswalks["md5"]),
-                content_size=self.get_fields(self.s, self.filecrosswalks["contentSize"])
+                content_size=str(self.get_fields(self.s, self.filecrosswalks["contentSize"]))
                     ))
 
         for variableID in range(0, len(self.variables)):
@@ -178,7 +192,7 @@ class Croissant():
             name=str(self.clean_name_string(self.get_fields(g, self.crosswalks["name"]))),
             description=self.get_fields(g, self.crosswalks["description"]),
             #creators=self.get_fields(g, self.crosswalks["creators"], REPEATED=False),
-            creators=self.get_fields(g, self.crosswalks["author"], REPEATED=False),
+            creators=self.schema_creators(self.get_fields(g, self.crosswalks["author"], REPEATED=False), self.get_fields(g, self.crosswalks["authoraffiliation"], REPEATED=False)),
             url=self.get_fields(g, self.crosswalks["url"]),
             date_created=self.get_fields(g, self.crosswalks["date_created"]),
             date_published=self.get_fields(g, self.crosswalks["date_published"]),
@@ -188,13 +202,13 @@ class Croissant():
             #citation=get_fields(g, crosswalks["citation"]),
             license=self.get_fields(g, self.crosswalks["license"], REPEATED=False),
             #sd_licence=self.get_fields(g, self.crosswalks["license"], REPEATED=False),
-            version=self.get_fields(g, self.crosswalks["version"], REPEATED=True),
+            version=str("%s.0" % self.get_fields(g, self.crosswalks["version"], REPEATED=True)),
             is_live_dataset=True,
             distribution=self.distributions,
             record_sets=self.record_sets,
             in_language=self.get_fields(g, self.crosswalks["in_language"], REPEATED=False),
             data_collection_type=self.get_fields(g, self.crosswalks["data_type"], REPEATED=True).split(','),
-            data_sensitive=self.get_fields(g, self.crosswalks["restricted"], REPEATED=False)
+            #data_sensitive=self.get_fields(g, self.crosswalks["restricted"], REPEATED=False)
             #data_sensitive={'file': 'restricted'}
         )
 
