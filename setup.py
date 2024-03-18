@@ -55,6 +55,9 @@ INSTALL_REQUIREMENTS = [
     # be installed when this one is.
     "httpx>=0.26.0",
     "jsonschema>=3.2.0",
+    "python-doi",
+    "rdflib",
+    "mlcroissant"
 ]
 
 SETUP_REQUIREMENTS = []
