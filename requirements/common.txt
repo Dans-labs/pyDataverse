@@ -1,2 +1,5 @@
 httpx>=0.26.0
+python-doi
+rdflib
+mlcroissant
 jsonschema>=3.2.0
