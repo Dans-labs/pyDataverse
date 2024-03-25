@@ -14,10 +14,12 @@
 # Semantic artifact mappings
 # Name field in Croissant
 mlcroissant:name a "name" ;
+    rdfs:range xs:string ;
     skos:exactMatch dct:title .
 
 # Description field
 mlcroissant:description a "description" ;
+    rdfs:range xs:string ;
     skos:exactMatch citation:dsDescriptionValue ;
     skos:exactMatch schema:description ;
     skos:exactMatch citationdesc:Text ;
@@ -25,59 +27,73 @@ mlcroissant:description a "description" ;
 
 # URL field
 mlcroissant:url a "url" ;
+    rdfs:range xs:string ;
     skos:exactMatch oa:describes .
 
 # "citation": "https://dataverse.org/schema/citation/datasetContactName",
 mlcroissant:citation a "citation" ;
+    rdfs:range xs:string ;
     skos:exactMatch citation:datasetContactName .
 
 #"keywords": "https://dataverse.org/schema/citation/keywordValue",
 mlcroissant:keywords a "keywords" ;
+    rdfs:range xs:string ;
     skos:exactMatch citation:keywordValue .
 
 # creators
 mlcroissant:creators a "creators" ;
+    rdfs:range xs:string ;
     skos:exactMatch citationauthor:Name .
 
 # Version
 mlcroissant:version a "version" ;
+    rdfs:range xs:string ;
     skos:exactMatch schema:version .
     
 # author
 mlcroissant:author a "author" ;
+    rdfs:range xs:string ;
     skos:exactMatch citationauthor:Name ;
     skos:exactMatch citation:authorName .
 
 # In Language
 mlcroissant:inLanguage a "in_language" ;
+    rdfs:range xs:string ;
     skos:exactMatch dct:language ;
     skos:exactMatch odissei:dansMetadataLanguage .
 
 # License
 mlcroissant:license a "license" ;
+    rdfs:range xs:string ;
     skos:exactMatch schema:license .
 
 # Publisher
 mlcroissant:publisher a "publisher";
+    rdfs:range xs:string ;
     skos:exactMatch citation:productionPlace .
 
 # Data Type
 mlcroissant:dataType a "data_type";
+    rdfs:range xs:string ;
     skos:exactMatch ddialliance:kindOfData .
 
 # Restricted
 mlcroissant:restricted a "restricted" ;
+    rdfs:range xs:string ;
     skos:exactMatch citationcore:restricted .
 
 # Date Modified
 mlcroissant:date_modified a "date_modified" ;
+    rdfs:range xs:date ;
     skos:exactMatch schema:dateModified .
 
 # Date Published
 mlcroissant:date_published a "date_published" ;
+    rdfs:range xs:date ;
     skos:exactMatch schema:datePublished .
 
 # Date Created
 mlcroissant:date_created a "date_created" ;
+    rdfs:range xs:date ;
     skos:exactMatch dct:dateSubmitted .
 
