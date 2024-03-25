@@ -1,4 +1,6 @@
 @prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xs: <http://www.w3.org/2001/XMLSchema#> .
 @prefix schema: <http://schema.org/> .
 @prefix oa: <http://www.openarchives.org/ore/terms/> .
 @prefix citation: <https://dataverse.org/schema/citation/> .
