@@ -49,7 +49,7 @@ mlcroissant:author a "author" ;
     skos:exactMatch citation:authorName .
 
 # In Language
-mlcroissant:inLanguage a "language" ;
+mlcroissant:inLanguage a "in_language" ;
     skos:exactMatch dct:language ;
     skos:exactMatch odissei:dansMetadataLanguage .
 
@@ -70,14 +70,14 @@ mlcroissant:restricted a "restricted" ;
     skos:exactMatch citationcore:restricted .
 
 # Date Modified
-mlcroissant:dateModified a "dateModified" ;
+mlcroissant:dateModified a "date_modified" ;
     skos:exactMatch schema:dateModified .
 
 # Date Published
-mlcroissant:PublishedMapping a "PublishedMapping" ;
+mlcroissant:PublishedMapping a "date_published" ;
     skos:exactMatch schema:datePublished .
 
 # Date Created
-mlcroissant:dateCreated a "dateCreated" ;
+mlcroissant:dateCreated a "date_created" ;
     skos:exactMatch dct:dateSubmitted .
 
