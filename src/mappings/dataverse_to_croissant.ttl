@@ -62,7 +62,7 @@ mlcroissant:publisher a "publisher";
     skos:exactMatch citation:productionPlace .
 
 # Data Type
-mlcroissant:dataType a "datatype";
+mlcroissant:dataType a "data_type";
     skos:exactMatch ddialliance:kindOfData .
 
 # Restricted
