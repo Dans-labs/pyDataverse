@@ -70,14 +70,14 @@ mlcroissant:restricted a "restricted" ;
     skos:exactMatch citationcore:restricted .
 
 # Date Modified
-mlcroissant:dateModified a "date_modified" ;
+mlcroissant:date_modified a "date_modified" ;
     skos:exactMatch schema:dateModified .
 
 # Date Published
-mlcroissant:PublishedMapping a "date_published" ;
+mlcroissant:date_published a "date_published" ;
     skos:exactMatch schema:datePublished .
 
 # Date Created
-mlcroissant:dateCreated a "date_created" ;
+mlcroissant:date_created a "date_created" ;
     skos:exactMatch dct:dateSubmitted .
 
