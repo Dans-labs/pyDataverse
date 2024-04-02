@@ -203,7 +203,7 @@ class Croissant():
             license=self.get_fields(g, self.crosswalks["license"], REPEATED=False),
             #sd_licence=self.get_fields(g, self.crosswalks["license"], REPEATED=False),
             version=str("%s.0" % self.get_fields(g, self.crosswalks["version"], REPEATED=True)),
-            is_live_dataset=True,
+            #is_live_dataset=True,
             distribution=self.distributions,
             record_sets=self.record_sets,
             in_language=self.get_fields(g, self.crosswalks["in_language"], REPEATED=False),
