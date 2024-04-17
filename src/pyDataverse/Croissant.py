@@ -105,12 +105,7 @@ class Croissant():
         if mappings:
             self.crosswalks = mappings.fields
             self.types = mappings.types
-        #self.crosswalks = { "name": "http://purl.org/dc/terms/title", "description": ["https://dataverse.org/schema/citation/dsDescriptionValue", "http://schema.org/description", "https://dataverse.org/schema/citation/dsDescription#Text", "https://dataverse.org/schema/citation/dsDescriptionText"], "url": "http://www.openarchives.org/ore/terms/describes",
-        #     "citation": "https://dataverse.org/schema/citation/datasetContactName", "keywords": "https://dataverse.org/schema/citation/keywordValue", "creators": "https://dataverse.org/schema/citation/author#Name",
-        #    "author": ["https://dataverse.org/schema/citation/authorName", "https://dataverse.org/schema/citation/author#Name"], "version": "http://schema.org/version", "in_language": ["http://purl.org/dc/terms/language", "https://portal.odissei.nl/schema/dansRights#dansMetadataLanguage"],
-        #    "date_modified": "http://schema.org/dateModified", "date_published":"http://schema.org/datePublished", "date_created": "http://purl.org/dc/terms/dateSubmitted", "license": "http://schema.org/license",
-        #    "publisher": "https://dataverse.org/schema/citation/productionPlace", "data_type": "http://rdf-vocabulary.ddialliance.org/discovery#kindOfData", "restricted": "https://dataverse.org/schema/core#restricted"
-        #     }          
+        self.crosswalks["authoraffiliation"] = "https://dataverse.org/schema/citation/authorAffiliation"      
         self.filecrosswalks = { "name": "http://schema.org/name", "description": "http://schema.org/name", "content_url": "http://schema.org/sameAs", "encoding_format": "http://schema.org/fileFormat",
                 "md5": "https://dataverse.org/schema/core#checksum", "contentSize": "https://dataverse.org/schema/core#filesize" }
         self.distributions = []
@@ -219,7 +214,7 @@ class Croissant():
 
     def fileid_lookup(self, subgraph, tagpoint):
         filename = self.get_fields(subgraph, tagpoint)
-        if self.DEBUG:
+        if self.DEBUG == 'fieldid_lookup':
             print("File TAG %s -> %s" % (tagpoint, filename))
             print(self.filealias)
         if not filename in self.filevariables:
@@ -236,6 +231,18 @@ class Croissant():
             return fileid
         except:
             return
+
+    def schema_creators(self, authors, affiliations):
+        creators = []
+        for nameID in range(0, len(authors)):
+            authorinfo = { "@type": "sc:Person", "name": authors[nameID]}
+            try:
+                if affiliations[nameID]:
+                    authorinfo['affiliation'] = affiliations[nameID]
+            except: 
+                continue
+            creators.append(authorinfo)
+        return creators
         
     def get_record(self):
         g = self.g
@@ -268,7 +275,7 @@ class Croissant():
 
         for variableID in range(0, len(self.variables)):
             variable = self.variables[variableID]
-            if self.DEBUG:
+            if self.DEBUG == 'variable':
                 print(variable)
             transforms = []
 
@@ -297,15 +304,18 @@ class Croissant():
         #print(self.get_fields(g, self.crosswalks["description"]))
         #print(self.get_fields(g, self.crosswalks["keywords"], REPEATED=False))
         #print(self.get_fields(g, self.crosswalks["licence"], REPEATED=False))
-        if self.DEBUG:
+        if self.DEBUG == 'Graph':
             self.printgraph(g)
+        if self.DEBUG == 'distributions':
+            print(self.distributions)
         #print("DATE" % str(self.get_fields(g, self.crosswalks["date_published"], REPEATED=False)))
         self.localmetadata = mlc.Metadata(
             cite_as=self.get_fields(g, self.crosswalks["name"]),
             name=self.clean_name_string(self.get_fields(g, self.crosswalks["name"])),
             description=self.get_fields(g, self.crosswalks["description"]),
             #creators=self.get_fields(g, self.crosswalks["creators"], REPEATED=False),
-            creators=self.get_fields(g, self.crosswalks["author"], REPEATED=False),
+            #creators=self.get_fields(g, self.crosswalks["author"], REPEATED=False),
+            creators=self.schema_creators(self.get_fields(g, self.crosswalks["author"], REPEATED=False), self.get_fields(g, self.crosswalks["authoraffiliation"], REPEATED=False)),
             url=self.get_fields(g, self.crosswalks["url"]),
             #date_created=self.get_fields(g, self.crosswalks["date_created"], REPEATED=False),
             #date_published=self.get_fields(g, self.crosswalks["date_published"], REPEATED=False),
@@ -330,9 +340,9 @@ class Croissant():
         )
         for property in self.crosswalks:
             if 'date' in property:
-                if self.DEBUG:
+                if self.DEBUG == 'date':
                     print("### DEBUG %s" % self.types[property])
-                print(self.normalize(self.get_fields(g, self.crosswalks[property], REPEATED=False), self.types[property]))
+                    print(self.normalize(self.get_fields(g, self.crosswalks[property], REPEATED=False), self.types[property]))
             
                 self.custommetadata = mlc.Metadata(
                     date_created = self.normalize(self.get_fields(g, self.crosswalks[property], REPEATED=False), self.types[property])
@@ -355,7 +365,7 @@ class Croissant():
         if search_property:
             if 'http' in property_to_find:
                 search_property = URIRef(property_to_find)
-            if self.DEBUG:
+            if self.DEBUG == 'subgraph':
                 print("Finding %s" % SEARCH)
             if SEARCH == 'PREDICATE':
                 data = g.triples((None, search_property, None))
@@ -370,7 +380,7 @@ class Croissant():
                 subgraph.add((s, p, o))
                 self.lastID = o
                 self.pointers.append(o)
-                if self.DEBUG:
+                if self.DEBUG == 'triples':
                     print("%s %s %s" % (s, p, o))
             return subgraph
         
@@ -390,8 +400,8 @@ class Croissant():
                 search_property = URIRef(fieldname)
             fielddata = []
             data = []
-            if self.DEBUG:
-                print(SEARCH)
+            #if self.DEBUG:
+            #    print(SEARCH)
             if SEARCH == 'PREDICATE':
                 data = g.triples((None, search_property, None))
             if SEARCH == 'SUBJECT':
