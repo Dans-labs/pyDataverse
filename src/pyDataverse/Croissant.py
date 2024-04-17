@@ -138,6 +138,8 @@ class Croissant():
         s = SearchApi(base_url)
         if limit:
             self.limit = limit
+        else:
+            self.limit = 10
         if not q:
             q = '*'
         try:
