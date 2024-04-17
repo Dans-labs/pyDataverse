@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ET
 from pyDataverse.api import SearchApi
 import re
 import json
+from urllib.parse import urlparse
 from datetime import datetime
 from dateutil import parser
 _PARQUET_FILES = "parquet-files"
@@ -84,11 +85,20 @@ class SemanticMappings():
         return ''
 
 class Croissant():
-    def __init__(self, host, doi, mappings, debug=False):
+    def __init__(self, doi, mappings=None, host=None, debug=False):
         self.known = {}
-        self.oai_ore_url = "%s/api/datasets/export?exporter=OAI_ORE&persistentId=%s" % (host, doi)
-        self.ddi_url = "%s/api/datasets/export?exporter=ddi&persistentId=%s" % (host, doi)
-        self.schema_url = "%s/api/datasets/export?exporter=schema.org&persistentId=%s" % (host, doi)
+        if host:
+            self.host = host
+        else:
+            self.host = self.resolver(doi)
+        if not mappings:
+            self.mappings = SemanticMappings()
+        else:
+            self.mappings = mappings
+        print(self.host)
+        self.oai_ore_url = "%s/api/datasets/export?exporter=OAI_ORE&persistentId=%s" % (self.host, doi)
+        self.ddi_url = "%s/api/datasets/export?exporter=ddi&persistentId=%s" % (self.host, doi)
+        self.schema_url = "%s/api/datasets/export?exporter=schema.org&persistentId=%s" % (self.host, doi)
         self.namespace = {'ns': 'ddi:codebook:2_5'}
         self.variables = []
         self.filevariables = {}
@@ -102,9 +112,10 @@ class Croissant():
         #https://dataverse.org/schema/citation/dsDescription#Text
         self.crosswalks = {}
         self.types = {}
-        if mappings:
-            self.crosswalks = mappings.fields
-            self.types = mappings.types
+        if self.mappings:
+            self.crosswalks = self.mappings.fields
+            self.types = self.mappings.types
+
         self.crosswalks["authoraffiliation"] = "https://dataverse.org/schema/citation/authorAffiliation"      
         self.filecrosswalks = { "name": "http://schema.org/name", "description": "http://schema.org/name", "content_url": "http://schema.org/sameAs", "encoding_format": "http://schema.org/fileFormat",
                 "md5": "https://dataverse.org/schema/core#checksum", "contentSize": "https://dataverse.org/schema/core#filesize" }
@@ -115,9 +126,9 @@ class Croissant():
 
     def resolver(self, pid):
         if 'doi:' in pid:
-            return self.resolve_doi(pid)
+            return "%s://%s" % (urlparse(self.resolve_doi(pid)).scheme, urlparse(self.resolve_doi(pid)).hostname)
         if 'hdl:' in pid:
-            return self.resolve_handle(pid)
+            return "%s://%s" % (urlparse(self.resolve_doi(pid)).scheme, urlparse(self.resolve_doi(pid)).hostname)
         return 
 
     def navigator(self, q=None, base=None, limit=None):
