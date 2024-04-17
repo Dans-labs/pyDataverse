@@ -157,7 +157,7 @@ class Croissant():
         r = requests.get(self.schema_url)
         data = json.loads(r.text)
         #if self.DEBUG == 'distributions':
-        print(data['distribution'])
+        #print(data['distribution'])
             
         if 'distribution' in data:
             for line in data['distribution']:
