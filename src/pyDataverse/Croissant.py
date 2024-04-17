@@ -175,15 +175,16 @@ class Croissant():
                     self.filevariables[mainid] = "f%s" % uid
                     filealias = mainid.split('.')[0]
                     self.filealias[filealias] = mainid
-                #@type': 'DataDownload
-                if '@type' in line:
-                    uid = line['identifier']
-                    mainid = line['name']
-                    fileinfo['name'] = mainid
-                    self.files["f%s" % uid] = fileinfo
-                    self.filevariables[mainid] = "f%s" % uid
-                    filealias = mainid.split('.')[0]
-                    self.filealias[filealias] = mainid                    
+                else:
+                    #@type': 'DataDownload
+                    if '@type' in line:
+                        uid = line['identifier']
+                        mainid = line['name']
+                        fileinfo['name'] = mainid
+                        self.files["f%s" % uid] = fileinfo
+                        self.filevariables[mainid] = "f%s" % uid
+                        filealias = mainid.split('.')[0]
+                        self.filealias[filealias] = mainid     
         return self.files
 
     def normalize(self, datastring, str_type):
