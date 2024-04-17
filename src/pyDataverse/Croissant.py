@@ -95,7 +95,6 @@ class Croissant():
             self.mappings = SemanticMappings()
         else:
             self.mappings = mappings
-        print(self.host)
         self.oai_ore_url = "%s/api/datasets/export?exporter=OAI_ORE&persistentId=%s" % (self.host, doi)
         self.ddi_url = "%s/api/datasets/export?exporter=ddi&persistentId=%s" % (self.host, doi)
         self.schema_url = "%s/api/datasets/export?exporter=schema.org&persistentId=%s" % (self.host, doi)
@@ -132,7 +131,11 @@ class Croissant():
         return 
 
     def navigator(self, q=None, base=None, limit=None):
-        s = SearchApi(base_url='https://ssh.datastations.nl')
+        if base:
+            base_url = base
+        else:
+            base_url='https://ssh.datastations.nl'
+        s = SearchApi(base_url)
         if limit:
             self.limit = limit
         if not q:
@@ -141,7 +144,7 @@ class Croissant():
             return json.loads(s.search(q, per_page=self.limit, data_type='dataset').text)
         except:
             return
-        
+
     def resolve_doi(self, pid):
         pid = pid.replace('doi:','')
         try:
