@@ -243,25 +243,28 @@ class Croissant():
         self.subcrosswalks = { "distribution": "http://www.openarchives.org/ore/terms/aggregates" }
         self.s = self.subgraph(g, self.subcrosswalks["distribution"])
         self.record_sets: list[mlc.RecordSet] = []
+        self.knownfiles = {}
         for i in range(0,len(self.pointers)): #self.pointers:
             pointer = self.pointers[i]
             self.s = self.subgraph(g, pointer, SEARCH="SUBJECT")
             #self.printgraph(self.s)
             #fileid = self.filevariables[self.get_fields(self.s, self.filecrosswalks["name"])]
             fileid = self.fileid_lookup(self.s, self.filecrosswalks["name"])
-            if self.DEBUG:
+            if self.DEBUG == 'distributions':
                 print("DEBUG file %s" % fileid)
             #print("FILE %s" % self.s, self.filecrosswalks["name"])
-            self.distributions.append(
-            mlc.FileObject(
-                name=self.clean_name_string(self.get_fields(self.s, self.filecrosswalks["name"])),
-                id=fileid, #self.files[fileid]['name'],
-                description=self.get_fields(self.s, self.filecrosswalks["description"]),
-                content_url=self.get_fields(self.s, self.filecrosswalks["content_url"]),
-                encoding_format=self.get_fields(self.s, self.filecrosswalks["encoding_format"]),  # No official arff mimetype exist
-                md5=self.get_fields(self.s, self.filecrosswalks["md5"]),
-                content_size=self.get_fields(self.s, self.filecrosswalks["contentSize"])
-            ))
+            if not fileid in self.knownfiles:
+                self.knownfiles[fileid] = True
+                self.distributions.append(
+                mlc.FileObject(
+                    name=self.clean_name_string(self.get_fields(self.s, self.filecrosswalks["name"])),
+                    id=fileid, #self.files[fileid]['name'],
+                    description=self.get_fields(self.s, self.filecrosswalks["description"]),
+                    content_url=self.get_fields(self.s, self.filecrosswalks["content_url"]),
+                    encoding_format=self.get_fields(self.s, self.filecrosswalks["encoding_format"]),  # No official arff mimetype exist
+                    md5=self.get_fields(self.s, self.filecrosswalks["md5"]),
+                    content_size=self.get_fields(self.s, self.filecrosswalks["contentSize"])
+                ))
 
         for variableID in range(0, len(self.variables)):
             variable = self.variables[variableID]
