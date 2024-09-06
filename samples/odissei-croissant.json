@@ -1,0 +1,84 @@
+{
+    "@type": "sc:Dataset",
+    "name": "Questionnaire_for_research_into_secure_behaviour_with_mobile_digital_devices",
+    "citeAs": "Questionnaire for research into secure behaviour with mobile digital devices",
+    "creator": [
+        {
+            "@type": "sc:Person",
+            "name": "Spruit, Marcel",
+            "affiliation": "The Hague University of Applied Sciences"
+        },
+        {
+            "@type": "sc:Person",
+            "name": "Oosting, Deborah",
+            "affiliation": "The Hague University of Applied Sciences"
+        },
+        {
+            "@type": "sc:Person",
+            "name": "Kreffer, C\u00e9line",
+            "affiliation": "The Hague University of Applied Sciences"
+        }
+    ],
+    "dateCreated": "2023-09-29 00:00:00",
+    "datePublished": "2023-09-29 00:00:00",
+    "description": "This file set contains a questionnaire. The questionnaire aims to investigate the factors and aspects that can influence the secure behaviour of inviduals while using mobile digital devices, such as smartphones, tablets or laptops.",
+    "isLiveDataset": true,
+    "keywords": [
+        "behaviour",
+        "cybersecurity"
+    ],
+    "inLanguage": "English",
+    "license": "http://creativecommons.org/licenses/by/4.0",
+    "publisher": "The Hague",
+    "url": "https://doi.org/10.17026/SS/PD54TO",
+    "version": "1.0.0",
+    "rai:dataCollectionType": [
+        "questionnaire"
+    ],
+    "@context": {
+        "@language": "en",
+        "@vocab": "https://schema.org/",
+        "citeAs": "cr:citeAs",
+        "column": "cr:column",
+        "conformsTo": "dct:conformsTo",
+        "cr": "http://mlcommons.org/croissant/",
+        "rai": "http://mlcommons.org/croissant/RAI/",
+        "data": {
+            "@id": "cr:data",
+            "@type": "@json"
+        },
+        "dataType": {
+            "@id": "cr:dataType",
+            "@type": "@vocab"
+        },
+        "dct": "http://purl.org/dc/terms/",
+        "examples": {
+            "@id": "cr:examples",
+            "@type": "@json"
+        },
+        "extract": "cr:extract",
+        "field": "cr:field",
+        "fileProperty": "cr:fileProperty",
+        "fileObject": "cr:fileObject",
+        "fileSet": "cr:fileSet",
+        "format": "cr:format",
+        "includes": "cr:includes",
+        "isLiveDataset": "cr:isLiveDataset",
+        "jsonPath": "cr:jsonPath",
+        "key": "cr:key",
+        "md5": "cr:md5",
+        "parentField": "cr:parentField",
+        "path": "cr:path",
+        "recordSet": "cr:recordSet",
+        "references": "cr:references",
+        "regex": "cr:regex",
+        "repeated": "cr:repeated",
+        "replace": "cr:replace",
+        "sc": "https://schema.org/",
+        "separator": "cr:separator",
+        "source": "cr:source",
+        "subField": "cr:subField",
+        "transform": "cr:transform"
+    },
+    "conformsTo": "http://mlcommons.org/croissant/1.0"
+}
