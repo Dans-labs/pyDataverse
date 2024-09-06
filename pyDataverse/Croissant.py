@@ -204,6 +204,8 @@ class Croissant():
         return self.files
 
     def normalize(self, datastring, str_type):
+        if not datastring:
+            return
         if 'date' in str_type:
             #return datastring
             if isinstance(datastring, list): 
