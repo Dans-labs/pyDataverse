@@ -451,8 +451,8 @@ class Croissant():
                     try:
                         return fielddata[0]
                     except:
-                        #return fielddata
-                        c = 1
+                        print(f"Error accessing the first element: {e}")
+                        #return None  # Continue with warning
                 #else:
                     #return ''
             else:
