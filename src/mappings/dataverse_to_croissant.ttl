@@ -57,6 +57,7 @@ mlcroissant:author a "author" ;
     rdfs:range xs:string ;
     skos:exactMatch citationauthor:Name ;
     skos:exactMatch citation:authorName .
+#"authoraffiliation": "https://dataverse.org/schema/citation/authorAffiliation"
 
 # In Language
 mlcroissant:inLanguage a "in_language" ;
