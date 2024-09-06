@@ -364,9 +364,9 @@ class Croissant():
         )
 
         metadatajson  = self.localmetadata.to_json()
-        self.senslocalmetadata = mlc.Metadata(
-            data_sensitive={'file': 'restricted'}
-        )
+        #self.senslocalmetadata = mlc.Metadata(
+        #    data_sensitive={'file': 'restricted'}
+        #)
         for property in self.crosswalks:
             if 'date' in property:
                 if self.DEBUG == 'date':
