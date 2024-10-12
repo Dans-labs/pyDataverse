@@ -11,6 +11,7 @@ import json
 from urllib.parse import urlparse
 from datetime import datetime
 from dateutil import parser
+import random
 _PARQUET_FILES = "parquet-files"
 
 class SemanticMappings():
@@ -193,8 +194,12 @@ class Croissant():
                     self.filealias[filealias] = mainid
                 else:
                     #@type': 'DataDownload
-                    if '@type' in line:
-                        uid = line['identifier']
+                    if '@type' in line: # and 'identifier' in line:
+                        if 'identifier' in line:
+                            uid = line['identifier']
+                        else:
+                            # Change
+                            uid = random.randint(0, 10000)
                         mainid = line['name']
                         fileinfo['name'] = mainid
                         self.files["f%s" % uid] = fileinfo
