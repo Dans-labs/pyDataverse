@@ -86,8 +86,11 @@ class SemanticMappings():
         return ''
 
 class Croissant():
-    def __init__(self, doi, mappings=None, host=None, debug=False):
+    def __init__(self, doi, mappings=None, host=None, metadata=False, debug=False):
         self.known = {}
+        self.metadata = {}
+        if metadata:
+            self.metadata = metadata
         if host:
             self.host = host
         else:
@@ -105,10 +108,13 @@ class Croissant():
         self.filealias = {}
         self.files = self.get_files()
         self.root = self.read_ddi()
-        self.r = requests.get(self.oai_ore_url)
+        if 'ore' in self.metadata:
+            ore = self.metadata['ore'] 
+        else:
+            ore = requests.get(self.oai_ore_url).text
         self.g = Graph()
         self.DEBUG = debug
-        self.g.parse(data=self.r.text, format="json-ld")
+        self.g.parse(data=ore, format="json-ld")
         #https://dataverse.org/schema/citation/dsDescription#Text
         self.crosswalks = {}
         self.types = {}
@@ -171,8 +177,12 @@ class Croissant():
 
     def get_files(self):
         self.files = {}
-        r = requests.get(self.schema_url)
-        data = json.loads(r.text)
+        if 'schema' in self.metadata:
+            schemadata = self.metadata['schema'] 
+        else:
+            r = requests.get(self.schema_url)
+            schemadata = r.text
+        data = json.loads(schemadata)
         #if self.DEBUG == 'distributions':
         #print(data['distribution'])
             
@@ -226,8 +236,12 @@ class Croissant():
             return datastring
             
     def read_ddi(self):
-        r = requests.get(self.ddi_url)
-        self.root = ET.fromstring(r.text)
+        if 'ddi' in self.metadata:
+            ddi = self.metadata['ddi']
+        else:
+            r = requests.get(self.ddi_url)
+            ddi = r.text
+        self.root = ET.fromstring(ddi)
         var_elements = self.root.findall('.//ns:var', self.namespace)
         for var in var_elements:
             labels = var.findall('./ns:labl', self.namespace)
