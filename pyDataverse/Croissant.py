@@ -318,7 +318,7 @@ class Croissant():
                     id=fileid, #self.files[fileid]['name'],
                     description=self.get_fields(self.s, self.filecrosswalks["description"]),
                     content_url=self.get_fields(self.s, self.filecrosswalks["content_url"]),
-                    encoding_format=self.get_fields(self.s, self.filecrosswalks["encoding_format"]),  # No official arff mimetype exist
+                    encoding_formats=self.get_fields(self.s, self.filecrosswalks["encoding_format"]),  # No official arff mimetype exist
                     md5=self.get_fields(self.s, self.filecrosswalks["md5"]),
                     content_size=self.get_fields(self.s, self.filecrosswalks["contentSize"])
                 ))
